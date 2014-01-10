@@ -1,0 +1,6 @@
+name: SnapBooth
+version: 1.0.0
+author: Paul Lewis
+description: Takes your picz yo.
+dependencies:
+  browser: any
