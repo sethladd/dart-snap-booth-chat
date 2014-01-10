@@ -1,6 +1,7 @@
 name: SnapBooth
-version: 0.2.0
 author: Paul Lewis
+version: 0.2.0
 description: Takes your picz yo.
 dependencies:
+  angular: any
   browser: any
