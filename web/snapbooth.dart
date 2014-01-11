@@ -1,46 +1,30 @@
-import 'dart:html';
-import 'camera.dart';
+library app;
 
-Camera camera;
-DivElement photoContainer;
-int photoCount = 0;
+import 'package:angular/angular.dart';
+import 'package:logging/logging.dart';
 
-final int CONTAINER_PADDING = 5;
-final int SNAPSHOT_WIDTH = 140;
-final int SNAPSHOT_PADDING = 14;
-final int SNAPSHOT_TOTAL_WIDTH = SNAPSHOT_WIDTH + SNAPSHOT_PADDING;
+import 'components/welcome.dart';
+import 'components/camera.dart';
+import 'components/activities.dart';
+import 'router.dart';
 
-void main() {
 
-  CanvasElement cameraView = querySelector('.video-container canvas') as CanvasElement
-      ..width = 640
-      ..height = 480;
-  ButtonElement takePhotoButton = querySelector('#take-photo');
-  photoContainer = querySelector('.taken-photos-inner');
-
-  camera = new Camera(cameraView)
-    ..start();
-
-  takePhotoButton.onClick.listen(takePhoto);
-}
-
-void takePhoto(_) {
-  if (camera.canTakePhoto) {
-    camera.takePhoto().then(onPhotoTaken);
+class MyAppModule extends Module {
+  MyAppModule() {
+    type(WelcomeComponent);
+    type(CameraComponent);
+    type(ActivitiesComponent);
+    type(RouteInitializer, implementedBy: AppRouteInitializer);
+    factory(NgRoutingUsePushState, (_) => new NgRoutingUsePushState.value(false));
   }
 }
 
-void onPhotoTaken(String photoData) {
-  ImageElement snapshot = new ImageElement()
-    ..src = photoData
-    ..width = SNAPSHOT_WIDTH;
+void main() {
 
-  photoCount++;
+  Logger.root.level = Level.FINEST;
+  Logger.root.onRecord.listen((LogRecord r) { print(r.message); });
 
-  int newWidth = (CONTAINER_PADDING + photoCount * SNAPSHOT_TOTAL_WIDTH);
+  ngBootstrap(module: new MyAppModule());
 
-  photoContainer
-    ..style.width = '${newWidth}px'
-    ..children.add(snapshot)
-    ..parent.scrollLeft = newWidth;
 }
+
