@@ -1,5 +1,7 @@
-insert nav bar
+insert nav bar here
 
 <ul>
-  <li ng-repeat="activity in ctrl.activities">{{activity.message}}</li>
+  <li ng-repeat="activity in ctrl.activities">
+    <a href="#/activities/{{activity.id}}">{{activity.message}}</a>
+  </li>
 </ul>

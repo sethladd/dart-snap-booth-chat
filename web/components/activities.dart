@@ -3,6 +3,7 @@ library component.find_friends;
 import 'package:angular/angular.dart';
 import 'dart:html';
 import '../models/models.dart';
+import '../services/activity.dart';
 
 @NgComponent(
     selector: 'activities',
@@ -12,22 +13,17 @@ import '../models/models.dart';
 )
 class ActivitiesComponent implements NgShadowRootAware {
 
+  Iterable<Activity> activities;
+
+  ActivityService service;
+
+  ActivitiesComponent(this.service) {
+    activities = service.getActivities();
+  }
+
   @override
   void onShadowRoot(ShadowRoot shadowRoot) {
     // TODO: implement onShadowRoot
-  }
-
-  List<Activity> activities = [];
-
-  ActivitiesComponent() {
-    activities = _load();
-  }
-
-  List<Activity> _load() {
-    return [
-      new Activity('New pic'),
-      new Activity('New friend')
-    ];
   }
 
 }

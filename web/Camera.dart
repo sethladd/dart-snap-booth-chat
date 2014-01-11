@@ -1,6 +1,7 @@
 import 'dart:html';
 import 'dart:async';
 
+// TODO merge with components/camera.dart
 class Camera {
 
   static final int COUNTDOWN_TIME = 3000;

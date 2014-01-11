@@ -15,8 +15,20 @@ class AppRouteInitializer implements RouteInitializer {
           path: '/camera',
           enter: view('views/camera.html'))
       ..addRoute(
+          name: 'view',
+          path: '/activities/:activityId',
+          enter: view('views/activity.html')
+      )
+
+      ..addRoute(
           name: 'activities',
           path: '/activities',
-          enter: view('views/activities.html'));
+          enter: view('views/activities.html'),
+          mount: (Route route) => route
+            ..addRoute(
+                name: 'view',
+                path: '/:activityId',
+                enter: view('views/activity.html')));
+
   }
 }
