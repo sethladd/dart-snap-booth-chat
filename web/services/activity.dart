@@ -4,8 +4,8 @@ import '../models/models.dart';
 
 class ActivityService {
   Map<String, Activity> activities = {
-    '3f2f23f23f': new Activity('3f2f23f23f', 'New pic'),
-    'gmblkfgdfg': new Activity('gmblkfgdfg', 'New friend')
+    '3f2f23f23f': new Activity('3f2f23f23f', 'Pic from Sally'),
+    'gmblkfgdfg': new Activity('gmblkfgdfg', 'Friend request from Bob')
   };
 
   Iterable<Activity> getActivities() {

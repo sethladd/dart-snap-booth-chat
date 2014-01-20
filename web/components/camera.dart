@@ -2,7 +2,7 @@ library component.camera;
 
 import 'package:angular/angular.dart';
 import 'dart:html';
-import '../camera.dart';
+import 'package:snapboothchat/camera.dart';
 
 const int CONTAINER_PADDING = 5;
 const int SNAPSHOT_WIDTH = 140;

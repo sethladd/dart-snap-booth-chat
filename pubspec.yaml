@@ -1,8 +1,17 @@
-name: SnapBooth
+name: snapboothchat
 author: Paul Lewis
 version: 0.2.0
-description: Takes your picz yo.
+description: Takes your picz yo, sharez em with your friends.
 dependencies:
   angular: any
   browser: any
   logging: any
+  http_server: any
+  route: any
+  crypto: any
+  http: any
+  serialization: any
+  google_oauth2_client: any
+  google_plus_v1_api: any
+  postgresql: any
+  lawndart: any
