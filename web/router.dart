@@ -25,6 +25,10 @@ class AppRouteInitializer implements RouteInitializer {
           enter: view('views/friends_find.html')
       )
       ..addRoute(
+          name: 'configuration',
+          path: '/configuration',
+          enter: view('views/configuration.html'))
+      ..addRoute(
           name: 'activities',
           path: '/activities',
           enter: view('views/activities.html'),

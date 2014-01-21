@@ -2,8 +2,8 @@ library component.activity_photo;
 
 import 'package:angular/angular.dart';
 import 'dart:html';
-import '../models/models.dart';
-import '../services/activity.dart';
+import 'package:snapboothchat/shared_html.dart';
+import '../services/photo_service.dart';
 
 @NgComponent(
     selector: 'activity-photo',
@@ -13,8 +13,8 @@ import '../services/activity.dart';
 )
 class ActivityPhotoComponent implements NgShadowRootAware {
 
-  ActivityService service;
-  Activity activity;
+  PictureService service;
+  Picture picture;
   @NgTwoWay('activity-id') String activityId;
 
   ActivityPhotoComponent(this.service, RouteProvider routeProvider) {
@@ -23,7 +23,9 @@ class ActivityPhotoComponent implements NgShadowRootAware {
 
   @override
   void onShadowRoot(ShadowRoot shadowRoot) {
-    activity = service.getById(activityId);
+    service.getById(activityId).then((Picture pic) {
+      picture = pic;
+    });
   }
 
 }

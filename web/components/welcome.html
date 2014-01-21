@@ -1,5 +1,13 @@
 <h1>Welcome!</h1>
 
+<div ng-if="ctrl.hasLocalUser">
+
 <p>Take a <a href="#/camera">picture</a>.</p>
 
 <p>View the <a href="#/activities">activities</a>.</p>
+
+</div>
+
+<div ng-unless="ctrl.hasLocalUser">
+  <p>Set a <a href="#/configuration">username</a>.</p>
+</div>

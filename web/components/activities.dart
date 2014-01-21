@@ -1,9 +1,9 @@
-library component.find_friends;
+library component.activities;
 
+import 'package:snapboothchat/shared_html.dart';
 import 'package:angular/angular.dart';
 import 'dart:html';
-import '../models/models.dart';
-import '../services/activity.dart';
+import '../services/photo_service.dart';
 
 @NgComponent(
     selector: 'activities',
@@ -13,12 +13,14 @@ import '../services/activity.dart';
 )
 class ActivitiesComponent implements NgShadowRootAware {
 
-  Iterable<Activity> activities;
+  Iterable<Picture> activities;
 
-  ActivityService service;
+  PictureService service;
 
   ActivitiesComponent(this.service) {
-    activities = service.getActivities();
+    service.all().toList().then((pictures) {
+      activities = pictures;
+    });
   }
 
   @override

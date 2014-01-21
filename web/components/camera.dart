@@ -3,6 +3,7 @@ library component.camera;
 import 'package:angular/angular.dart';
 import 'dart:html';
 import 'package:snapboothchat/camera.dart';
+import '../services/photo_service.dart';
 
 const int CONTAINER_PADDING = 5;
 const int SNAPSHOT_WIDTH = 140;
@@ -20,6 +21,9 @@ class CameraComponent implements NgShadowRootAware {
   Camera camera;
   DivElement photoContainer;
   int photoCount = 0;
+  PictureService service;
+
+  CameraComponent(this.service);
 
   @override
   onShadowRoot(ShadowRoot shadowRoot) {

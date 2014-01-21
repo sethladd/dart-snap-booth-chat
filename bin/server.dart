@@ -2,7 +2,7 @@ library server;
 
 import 'package:args/args.dart' show ArgParser, ArgResults;
 import 'package:http_server/http_server.dart' show HttpBodyHandler, HttpRequestBody, VirtualDirectory;
-import 'dart:io' show ContentType, File, HttpRequest, HttpResponse, HttpServer, Options, Platform;
+import 'dart:io' show ContentType, File, HttpRequest, HttpResponse, HttpServer, Options, Platform, WebSocketTransformer;
 import 'package:logging/logging.dart' show Level, LogRecord, Logger;
 import 'package:route/server.dart' show Router, UrlPattern;
 import 'package:path/path.dart' as path;
@@ -78,6 +78,7 @@ main(List<String> arguments) {
           .transform(new HttpBodyHandler()).listen(registerPlayer)
         ..serve('/friendsToChat', method: 'GET').listen(friendsToChat)
         ..serve(r'/admin/matches/update', method: 'POST')
+        ..serve(r'/ws/pictures').transform(new WebSocketTransformer()).listen(pictureMessage)
 
         ..defaultStream.listen(staticFiles.serveRequest);
 
@@ -269,4 +270,8 @@ _respondWithMessage(HttpResponse resp, int statusCode, String message) {
   resp.statusCode = statusCode;
   resp.write(message);
   resp.close();
+}
+
+void pictureMessage(dynamic event) {
+  var message = serializer.read(JSON.decode(event));
 }
