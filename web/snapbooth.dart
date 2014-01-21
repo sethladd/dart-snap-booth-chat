@@ -14,10 +14,12 @@ import 'components/welcome.dart';
 import 'components/camera.dart';
 import 'components/activities.dart';
 import 'components/friends_find.dart';
+import 'components/configuration.dart';
 import 'components/activity_photo.dart';
 
 import 'services/photo_service.dart';
 import 'services/online_status.dart';
+import 'services/user_service.dart';
 
 import 'router.dart';
 
@@ -28,7 +30,9 @@ class MyAppModule extends Module {
     type(ActivitiesComponent);
     type(ActivityPhotoComponent);
     type(FriendsFindComponent);
+    type(ConfigurationComponent);
     type(PictureService);
+    type(UserService);
     type(OnlineStatus);
     value(Serialization, new Serialization());
     value(WebSocket, new WebSocket('ws://localhost:8888/ws/pictures'));

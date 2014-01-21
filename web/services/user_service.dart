@@ -27,6 +27,8 @@ class UserService {
   }
 
   Future<User> currentUser() {
-    return Persistable.load('localuser', User);
+    return Persistable.load('localuser', User).then((user) {
+      return (user == null) ? (new User()..id='localuser') : user;
+    });
   }
 }

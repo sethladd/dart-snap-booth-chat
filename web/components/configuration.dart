@@ -18,20 +18,13 @@ class ConfigurationComponent {
   User user;
   UserService userService;
 
-  String username;
-
   ConfigurationComponent(this.userService) {
     userService.currentUser().then((u) => user = u);
   }
 
   void save() {
-    if (user == null) {
-      user = new User();
-    }
-
-    user.name = username;
     user.store()
-      .then((_) => log.fine('Saved $username as username'));
+      .then((_) => log.fine('Saved ${user.name} as username'));
   }
 
 }
