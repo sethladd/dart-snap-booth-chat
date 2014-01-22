@@ -6,6 +6,7 @@ import 'dart:async';
 import 'package:angular/angular.dart';
 import 'package:logging/logging.dart';
 
+import 'package:snapboothchat/log_handlers.dart';
 import 'package:snapboothchat/shared_html.dart';
 import 'package:snapboothchat/persistable_html.dart' as db;
 import 'package:serialization/serialization.dart';
@@ -35,7 +36,7 @@ class MyAppModule extends Module {
     type(UserService);
     type(OnlineStatus);
     value(Serialization, new Serialization());
-    value(WebSocket, new WebSocket('ws://localhost:8888/ws/pictures'));
+    value(WebSocket, new WebSocket('ws://localhost:8765/ws'));
     type(RouteInitializer, implementedBy: AppRouteInitializer);
     factory(NgRoutingUsePushState, (_) => new NgRoutingUsePushState.value(false));
   }
@@ -44,7 +45,7 @@ class MyAppModule extends Module {
 void main() {
 
   Logger.root.level = Level.FINEST;
-  Logger.root.onRecord.listen((LogRecord r) { print(r.message); });
+  Logger.root.onRecord.listen(onLogRecord);
   Logger log = new Logger('main');
 
   runZoned(() {

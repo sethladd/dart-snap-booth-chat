@@ -56,11 +56,12 @@ main(List<String> arguments) {
 
       VirtualDirectory staticFiles = new VirtualDirectory(root)
         ..jailRoot = false
+        ..allowDirectoryListing = true
         ..followLinks = true;
 
       new Router(server)
         ..serve(r'/users/online', method: 'GET').listen(getOnlineUsers)
-        ..serve(r'/ws/pictures').transform(new WebSocketTransformer()).listen(pictureSocket)
+        ..serve(r'/ws').transform(new WebSocketTransformer()).listen(pictureSocket)
         ..defaultStream.listen(staticFiles.serveRequest);
 
       log.info('Server running');
@@ -75,9 +76,10 @@ Map<String, WebSocket> _socketConnections = {};
 void pictureSocket(WebSocket socket) {
   String userName;
   socket.listen((msgData) {
-    log.fine('Received msg over socket /ws/pictures: $msgData');
-    var message = serializer.read(JSON.encode(msgData));
+    log.fine('Received msg over socket: $msgData');
+    var message = serializer.read(JSON.decode(msgData));
     if (message is LoginMessage) {
+      log.fine('Received LoginMessage');
       _socketConnections[(message as LoginMessage).name] = socket;
     } else if (message is Picture) {
       var picMessage = (message as Picture);
@@ -90,7 +92,7 @@ void pictureSocket(WebSocket socket) {
     }
   },
   onDone: () => _socketConnections.remove(userName),
-  onError: () => _socketConnections.remove(userName));
+  onError: (e) => _socketConnections.remove(userName));
 }
 
 void getOnlineUsers(HttpRequest req) {
@@ -100,7 +102,8 @@ void getOnlineUsers(HttpRequest req) {
 ArgParser initArgsParser() {
   ArgParser argsParser = new ArgParser()
     ..addOption('root',
-        defaultsTo: path.join(path.dirname(Platform.script.toString()), '..', 'web'),
+        defaultsTo: path.normalize(
+            path.join(Directory.current.path, '..', 'web')),
         help: 'root directory for the HTTP server')
     ..addFlag('help', help: 'Prints the help information', negatable: false);
   return argsParser;

@@ -17,7 +17,7 @@ class WelcomeComponent {
 
   WelcomeComponent(this.userService) {
     userService.currentUser().then((user) {
-      hasLocalUser = user != null;
+      hasLocalUser = user.name != null;
     });
   }
 
