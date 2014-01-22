@@ -96,7 +96,8 @@ void pictureSocket(WebSocket socket) {
 }
 
 void getOnlineUsers(HttpRequest req) {
-  _sendJson(req.response, _socketConnections.keys);
+  log.fine('Request for online users');
+  _sendJson(req.response, _socketConnections.keys.map((name) => new User()..name=name).toList());
 }
 
 ArgParser initArgsParser() {

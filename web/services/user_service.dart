@@ -31,7 +31,7 @@ class UserService {
   Future<List<User>> all() {
     if (onlineStatus.isOnline) {
       return http.get('/users/online').then((HttpResponse response) {
-          return JSON.decode(serializer.read(response.data));
+          return serializer.read(response.data);
         });
     } else {
       return new Future.value([]);
